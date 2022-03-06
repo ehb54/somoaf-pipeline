@@ -1,0 +1,69 @@
+{
+    "debug"           : true
+
+    ,"afversion"       : 2                                                                           # version of alpha fold to process, number or "all"
+    ,"base"            : "/home/ehb/mdutil/afpp"                                                     # base directory for called scripts
+    ,"afftp"           : "__path__/af/ftp.ebi.ac.uk/20220221/ftp.ebi.ac.uk/pub/databases/alphafold"  # alphafold download
+    ,"afpdb"           : "__path__/af/af_pdb"                                                        # directory of all downloaded alphafold pdbs
+    ,"fasta"           : "__path__/af/af_blast"                                                      # directory of all downloaded fasta
+    ,"fasta_url"       : "https://www.uniprot.org/uniprot"                                           # url for fasta 
+    ,"unifeat"         : "__path__/af/af_features"                                                   # directory of all downloaded uniprot features
+    ,"unifeat_url"     : "https://www.ebi.ac.uk/proteins/api/proteins?offset=0&size=100&accession="  # REST api url prefix to download features
+    ,"chains"          : "__path__/af/af_chains"                                                     # chain summary files
+    ,"cpnotes"         : "__path__/af/af_cpnotes"                                                    # chain processing notes
+    ,"cperrs"          : "__path__/af/af_cperrors"                                                   # chain processing errors
+    ,"pdbnotes"        : "__path__/af/af_pdbnotes"                                                   # pdb processing notes
+    ,"pdbstage1"       : "__path__/af/af_pdbstage1"                                                  # cut pdbs for processing
+    ,"pdbstage2"       : "__path__/af/af_pdbstage2"                                                  # processed pdbs ready for computations, posting
+    ,"pdb_tfrev"       : "__path__/af/af_pdb_tfrev"                                                  # processed pdbs for jsmol TF
+    ,"somocli"         : "/opt/ultrascan3ehb/bin/us_saxs_cmds_t"                                     # directory of US SOMO cli 
+    ,"sesca"           : "__path__/af/SESCA/scripts/SESCA_main.py"                                   # directory of SESCA_main.py
+    ,"sescadir"        : "__path__/af/af_cd"                                                         # directory of SESCA computed output
+    ,"somoenv"         : ""                                                                          # us3_somo environment setup
+    ,"somorun"         : "timeout 2.3m xvfb-run -d us3_somo"                                         # us3_somo executable run
+    ,"somordir"        : "/home/ehb/ultrascan/somo"                                                  # directory of somo results
+    ,"tempdir"         : "__path__/af/af_tmp"                                                        # directory of temporary/scratch dir
+    ,"cifdir"          : "__path__/af/af_cif"                                                        # directory of generated cif files
+    ,"mmcifdir"        : "__path__/af/af_mmcif"                                                      # directory of generated mmcif files
+    ,"csvdir"          : "__path__/af/af_csv"                                                        # directory of generated csv files
+    ,"prdir"           : "__path__/af/af_pr"                                                         # directory of generated pr files
+    ,"zipdir"          : "__path__/af/af_zip"                                                        # directory of generated zip files
+    ,"txzdir"          : "__path__/af/af_txz"                                                        # directory of generated txz files
+    ,"maxit"           : "env RCSBROOT=__path__/maxit-v11.100-prod-src __path__/maxit"               # path to run maxit
+    ,"mongodb"         : "somo"                                                                      # mongo database name
+    ,"mongocoll"       : "afd"                                                                       # mongo collection name
+    ,"mongocmds"       : "__path__/af/af_mongocmds"                                                  # directory of mongo update commands
+
+    ,"stages" : [
+        {
+            "name"    : "collect requried files"
+            ,"cmd"    : "__base__/collect.pl __id__"
+            ,"active" : false
+        }
+        ,{
+            "name"    : "build chain summary"
+            ,"cmd"    : "__base__/chains.pl __id__"
+            ,"active" : false
+        }
+        ,{
+            "name"    : "produce pdb variants"
+            ,"cmd"    : "__base__/pdbs.pl __id__"
+            ,"active" : false
+        }
+        ,{
+            "name"    : "finalize pdb variants"
+            ,"cmd"    : "__base__/pdb2.pl __id__"
+            ,"active" : false
+        }
+        ,{
+            "name"    : "computations"
+            ,"cmd"    : "__base__/compute.pl __id__"
+            ,"active" : false
+        }
+        ,{
+            "name"    : "package"
+            ,"cmd"    : "__base__/package.pl __id__"
+            ,"active" : false
+        }
+    ]
+}
