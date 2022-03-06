@@ -21,7 +21,6 @@ die $notes if !@ARGV;
 
 use File::Temp qw(tempdir);
 use File::Temp qw(tempfile);
-use DateTime qw();
 
 p_config_init();
 

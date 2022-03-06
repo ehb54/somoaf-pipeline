@@ -443,6 +443,7 @@ sub p_config_init {
         ,"fasta"
         ,"unifeat"
         ,"chains"
+        ,"cpnotes"
         ,"cperrs"
         ,"pdbstage1"
         ,"pdbstage2"
@@ -458,7 +459,7 @@ sub p_config_init {
         ,"txzdir"
         ,"mongocmds"
         ) {
-        error_exit( "$0: p_config_init() : $configfile $d $$p_config{$dir} is not a directory" ) if !-d $$p_config{$d};
+        error_exit( "$0: p_config_init() : $configfile $d $$p_config{$d} is not a directory" ) if !-d $$p_config{$d};
     }
 
     $__dbm_coll = "$$p_config{mongodb}.$$p_config{mongocoll}";
