@@ -27,7 +27,7 @@ my $json = <<"__EOF";
     ,"sescadir"        : "$targetbase/w_000/af_cd"                                                        # directory of SESCA computed output
     ,"somoenv"         : "export LD_LIBRARY_PATH=/ultrascan3/us_somo/lib:/qwt-6.1.5/lib"    # us3_somo environment setup
     ,"somorun"         : "timeout 3m xvfb-run -a /ultrascan3/us_somo/bin64/us3_somo"               # us3_somo executable run
-    ,"somordir"        : "$targetbasehome/ultrascan/somo"                                                         # directory of somo results
+    ,"somordir"        : "$targetbase/w_000/afpp/ultrascan/somo"                                     # directory of somo results
     ,"tempdir"         : "$targetbase/w_000/af_tmp"                                                       # directory of temporary/scratch dir
     ,"cifdir"          : "$targetbase/w_000/af_cif"                                                       # directory of generated cif files
     ,"mmcifdir"        : "$targetbase/w_000/af_mmcif"                                                     # directory of generated mmcif files

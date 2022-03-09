@@ -11,7 +11,7 @@ $slurm = <<__EOF;
 #SBATCH -p normal          # Queue (partition) name
 #SBATCH -N 1               # Total # of nodes (must be 1 for serial)
 #SBATCH -n 1               # Total # of mpi tasks (should be 1 for serial)
-#SBATCH -t 01:30:00        # Run time (hh:mm:ss)
+#SBATCH -t 04:00:00        # Run time (hh:mm:ss)
 #SBATCH --mail-type=all    # Send email at begin and end of job
 #SBATCH --mail-user=brookes@uthscsa.edu
 
@@ -21,9 +21,8 @@ module load tacc-singularity
 pwd
 date
 singularity/start_mongo.sh
-    
-    
-singularity run ~/somoafpipe.sif bash -c "singularity/xargs.pl 136 ./run.pl $targetbase/af/w/w_xxx/ids >xxx.out 2>xxx.err"
+echo "mongo started, now run"    
+singularity run ~/somoafpipe.sif bash -c "singularity/xargs.pl 136 ./run.pl $targetbase/w_xxx/ids >xxx.out 2>xxx.err"
 
 __EOF
 ;
