@@ -94,7 +94,3 @@ while ( @l ) {
     print `$cmd`;
     ++$i;
 }
-
-       
-        
-    

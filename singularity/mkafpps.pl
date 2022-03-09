@@ -1,7 +1,7 @@
 #!/usr/bin/perl
 
 my $afppbase   = "/scratch/00451/tg457210/af/afpp2";
-my $targetbase = "/scratch/00451/tg457210/af/w/";
+my $targetbase = "/scratch/00451/tg457210/af/w";
 
 my $json = <<"__EOF";
 {
