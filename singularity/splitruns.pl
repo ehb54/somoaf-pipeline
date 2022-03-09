@@ -71,7 +71,7 @@ $tmpdir = "/scratch/00451/tg457210/af/work/af_tmp";
 my $i = 0;
 
 while ( @l ) {
-    my ( $fh, $ft ) = tempfile( "$tmpdir/xargs.XXXXXX", UNLINK => 0 );
+    my ( $fh, $ft ) = tempfile( "$tmpdir/xargs.XXXXXX", UNLINK => 1 );
     my @args = splice @l, 0, $jpc;
     print $fh join "\n", @args;
     close $fh;
@@ -87,6 +87,7 @@ while ( @l ) {
     for my $cpd ( @cpd ) {
         $cmd .= "cd $bd/$cpd && ls | grep -f $ft | xargs -P4 cp -t $td/w_$iu/$cpd/ && \\\n";
     }
+    $cmd .= "cp $ft td/w_$iu/$cpd/ids && \\\n";
     $cmd .= "echo $w_$iu done\n";
 
     print $cmd;
