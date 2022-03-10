@@ -40,7 +40,8 @@ targetbase for jobs is $targetbase
 
 die $notes if !@ARGV;
 
-while ( my $id = shift ) {
+while ( @ARGV ) {
+    my $id = shift;
     my $uid = '0'x(3 - length($id)) . $id;
     my $uslurm = $slurm;
 

@@ -75,8 +75,30 @@ my $json = <<"__EOF";
 }
 __EOF
 
-{};
-##
+;
+
+$usrc = <<__EOF;
+4.0
+/usr/bin/firefox
+tar_dummy
+zip_dummy
+/ultrascan3/us_somo/somo/doc
+$targetbase/w_000/afpp/ultrascan/data
+$targetbase/w_000/afpp/ultrascan/
+$targetbase/w_000/afpp/ultrascan/archive
+$targetbase/w_000/afpp/ultrascan/results
+0
+0.5
+$targetbase/w_000/afpp/ultrascan/reports
+/ultrascan3/us_somo
+Helvetica
+10
+10
+128
+$targetbase/w_000/afpp/ultrascan/tmp
+__EOF
+;
+
 
 $notes = "
 usage: $0 ids
@@ -86,12 +108,16 @@ makes an afpp directory with proper config file
 under: $targetbase
 
 afpp will be copied from $afppbase
+also makes somo usrc.conf
+
 ";
+
 
 
 die $notes if !@ARGV;
 
-while ( my $id = shift ) {
+while ( @ARGV ) {
+    my $id = shift;
     my $uid = '0'x(3 - length($id)) . $id;
     
     my $ujson = $json;
@@ -102,7 +128,7 @@ while ( my $id = shift ) {
 
     ## mk afppdir
 
-    die "$td/afpp exists directory\n" if -d "$td/afpp";
+    die "$td/afpp directory exists, remove with:\nrm -fr $td/afpp\n" if -d "$td/afpp";
 
     my $cmd = "cp -r $afppbase $td/afpp";
     
@@ -110,8 +136,25 @@ while ( my $id = shift ) {
     print `$cmd`;
     die "$cmd failed $?\n" if $?;
 
-    open my $fh, ">$td/afpp/config.json";
-    print $fh $ujson;
-    close $fh;
+    {
+        my $f = "$td/afpp/config.json";
+        open my $fh, ">$f";
+        print $fh $ujson;
+        close $fh;
+        print "$f\n";
+    }
+
+    ## make somo
+    {
+        my $uusrc = $usrc;
+        $uusrc =~ s/w_000/w_$uid/mg;
+
+        my $f = "$td/afpp/ultrascan/etc/usrc.conf";
+        open my $fh, ">$f";
+        print $fh $uusrc;
+        close $fh;
+
+        print "$f\n";
+    }
 }
   
