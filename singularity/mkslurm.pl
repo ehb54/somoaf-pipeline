@@ -22,7 +22,7 @@ pwd
 date
 singularity/start_mongo.sh
 echo "mongo started, now run"    
-singularity run ~/somoafpipe.sif bash -c "singularity/xargs.pl 136 ./run.pl $targetbase/w_xxx/ids >xxx.out 2>xxx.err"
+singularity run ~/somoafpipe.sif bash -c "export HOME=$targetbase/w_xxx/afpp && singularity/xargs.pl 136 ./run.pl $targetbase/w_xxx/ids >xxx.out 2>xxx.err"
 
 __EOF
 ;
