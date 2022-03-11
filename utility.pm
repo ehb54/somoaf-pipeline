@@ -468,6 +468,12 @@ sub p_config_init {
     if ( exists $$p_config{debug} ) {
         $debug = $$p_config{debug};
     }
+
+    if ( $$p_config{"ln"} ) {
+        $ln = "cp";
+    } else {
+        $ln = "ln";
+    }
 }
 
 sub error_exit {

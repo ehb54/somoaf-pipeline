@@ -72,7 +72,7 @@ while ( $fid = shift ) {
 
             log_append( "$fpdb compute CD spectra\n" );
             log_flush();
-            my $cmd = "ln $f $dir/ && cd $dir && $cdcmd $f && grep -v Workdir: CD_comp.out | perl -pe 's/ \\/srv.*SESCA\\// SESCA\\//' > $$p_config{sescadir}/${fpdbnoext}-sesca-cd.dat";
+            my $cmd = "$ln $f $dir/ && cd $dir && $cdcmd $f && grep -v Workdir: CD_comp.out | perl -pe 's/ \\/srv.*SESCA\\// SESCA\\//' > $$p_config{sescadir}/${fpdbnoext}-sesca-cd.dat";
             run_cmd( $cmd, true );
             if ( run_cmd_last_error() ) {
                 my $error = sprintf( "$0: ERROR [%d] - $fpdb running SESCA computation $cmd\n", run_cmd_last_error() );
@@ -345,10 +345,12 @@ while ( $fid = shift ) {
                 my $mongoc = qq[db.$$p_config{mongocoll}.update({_id:"$data{_id}"},{\$set:{];
                 my @sets;
                 for my $k ( keys %data ) {
-                    if ( exists $mongostring{$k} ) {
-                        push @sets, qq[$k:"$data{$k}"];
-                    } else {
-                        push @sets, qq[$k:$data{$k}];
+                    if ( $k ne '_id' ) {
+                        if ( exists $mongostring{$k} ) {
+                            push @sets, qq[$k:"$data{$k}"];
+                        } else {
+                            push @sets, qq[$k:$data{$k}];
+                        }
                     }
                 }
                 $mongoc .= join ',', @sets;
@@ -389,7 +391,7 @@ while ( $fid = shift ) {
                 ### link contents into tar directory
                 my $cmd =
                     "cd $dir"
-                    . " && ln $$p_config{pdbstage2}/$fpdb $$p_config{mmcifdir}/${fpdbnoext}.cif $$p_config{prdir}/${fpdbnoext}-pr.dat $$p_config{sescadir}/${fpdbnoext}-sesca-cd.dat $$p_config{csvdir}/${fpdbnoext}.csv ."
+                    . " && $ln $$p_config{pdbstage2}/$fpdb $$p_config{mmcifdir}/${fpdbnoext}.cif $$p_config{prdir}/${fpdbnoext}-pr.dat $$p_config{sescadir}/${fpdbnoext}-sesca-cd.dat $$p_config{csvdir}/${fpdbnoext}.csv ."
                     . " && tar Jcf $$p_config{txzdir}/${fpdbnoext}.txz *"
                     . " && zip $$p_config{zipdir}/${fpdbnoext}.zip *"
                     ;
