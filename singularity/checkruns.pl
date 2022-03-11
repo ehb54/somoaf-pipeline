@@ -123,6 +123,72 @@ while ( @ARGV ) {
                    ,$warn
         );
     
+    $sum{ids}   += scalar @ids;
+    $sum{pps}   += scalar @pps;
+    $sum{pdb}   += scalar @pdb;
+    $sum{pdbtf} += scalar @pdbtf;
+    $sum{cif}   += scalar @cif;
+    $sum{pr}    += scalar @pr;
+    $sum{csv}   += scalar @csv;
+    $sum{cd}    += scalar @cd;
+    $sum{txz}   += scalar @txz;
+    $sum{mongo} += scalar @mongo;
+    $sum{zip}   += scalar @zip;
 }
 
 
+my $warn = "";
+
+if ( $sum{ids} + $sum{pps} != $sum{pdb} ) {
+    $warn .= "pdb ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{pdbtf} ) {
+    $warn .= "pdbtf ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{cif} ) {
+    $warn .= "mmcif ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{pr} ) {
+    $warn .= "pr ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{cd} ) {
+    $warn .= "cd ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{csv} ) {
+    $warn .= "csv ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{txz} ) {
+    $warn .= "txz ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{zip} ) {
+    $warn .= "zip ";
+}
+
+if ( $sum{ids} + $sum{pps} != $sum{mongo} ) {
+    $warn .= "mongo ";
+}
+
+$warn = "ok" if !$warn;
+
+print sprintf( $fmt
+               ,"tot"
+               ,$sum{ids}
+               ,$sum{pps}
+               ,$sum{pdb}
+               ,$sum{pdbtf}
+               ,$sum{cif}
+               ,$sum{pr}
+               ,$sum{csv}
+               ,$sum{cd}
+               ,$sum{txz}
+               ,$sum{zip}
+               ,$sum{mongo}
+               ,$warn
+    );
