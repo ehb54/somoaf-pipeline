@@ -126,7 +126,7 @@ while ( $fid = shift ) {
                 unlink glob "$$p_config{somordir}/saxs/$fpdbnoext*";
 
                 my $cmd = "$$p_config{somoenv} && cd $$p_config{pdbstage2} && $$p_config{somorun} -g $ft $fpdb";
-                run_cmd( $cmd, true, 2 ); # try 2x since very rarely zeno call crashes and/or hangs?
+                run_cmd( $cmd, true, 4 ); # try 2x since very rarely zeno call crashes and/or hangs?
 
                 ## cleanup extra files
                 unlink glob "$$p_config{somordir}/$fpdbnoext*{asa_res,bead_model,hydro_res,bod}";

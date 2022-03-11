@@ -7,6 +7,7 @@ my $json = <<"__EOF";
 {
     "debug"           : true
 
+    ,"ln"              : "cp"
     ,"afversion"       : 2                                                                           # version of alpha fold to process, number or "all"
     ,"base"            : "$targetbase/w_000/afpp"                                                         # base directory for called scripts
     ,"afftp"           : "$targetbase/w_000/af_ftp"                                                       # alphafold download
@@ -39,6 +40,7 @@ my $json = <<"__EOF";
     ,"mongodb"         : "somo"                                                                      # mongo database name
     ,"mongocoll"       : "afd"                                                                       # mongo collection name
     ,"mongocmds"       : "$targetbase/w_000/af_mongocmds"                                                 # directory of mongo update commands
+    ,"pkgdir"          : "/work/00451/tg457210/ls6/af_pkg"
 
     ,"stages" : [
         {
