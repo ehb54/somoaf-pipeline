@@ -60,6 +60,17 @@ sub dbm_count {
     return $mongo_af->count_documents({});
 }
 
+function digitfix( $strval, $digits ) {
+    $strnodp = str_replace( ".", "", $strval );
+    if ( strlen($strnodp) >= $digits ) {
+        return $strval;
+    }
+    if ( strpos( $strval, "." ) ) {
+        return $strval . "0";
+    }
+    return $strval . ".0";
+}
+
 sub dbm_print {
     my $name = shift;
     my $res = dbm_read( $name );
@@ -172,15 +183,15 @@ sub dbm_csv {
         , $$res{ 'res' }
         , sprintf( "%.1f", $$res{ 'mw' } )
         , $$res{ 'psv' }
-        , sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 ), 3 )
 #        , sprintf( "%.2g", $$res{ 'Dtr_sd' } * 1e7 )
-        , sprintf( "%.3g", $$res{ 'S' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'S' } ), 3 )
 #        , sprintf( "%.2g", $$res{ 'S_sd' } )
-        , sprintf( "%.3g", $$res{ 'Rs' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rs' } ), 3 )
 #        , sprintf( "%.2g", $$res{ 'Rs_sd' } )
-        , sprintf( "%.3g", $$res{ 'Eta' } )
-        , sprintf( "%.2f", $$res{ 'Eta_sd' } )
-        , sprintf( "%.3g", $$res{ 'Rg' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'Eta' } ), 3 )
+        , digitfix( sprintf( "%.2f", $$res{ 'Eta_sd' } ), 2 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rg' } ), 3 )
         , sprintf( "%.2f", $$res{ 'ExtX' } )
         , sprintf( "%.2f", $$res{ 'ExtY' } )
         , sprintf( "%.2f", $$res{ 'ExtZ' } )
@@ -211,15 +222,15 @@ sub dbm_csv_no_multiframe {
         , $$res{ 'sp' } ? $$res{ 'sp' } : "n/a"
         , sprintf( "%.1f", $$res{ 'mw' } )
         , $$res{ 'psv' }
-        , sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 ), 3 )
 #        , sprintf( "%.2g", $$res{ 'Dtr_sd' } * 1e7 )
-        , sprintf( "%.3g", $$res{ 'S' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'S' } ), 3 )
 #        , sprintf( "%.2g", $$res{ 'S_sd' } )
-        , sprintf( "%.3g", $$res{ 'Rs' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rs' } ), 3 )
 #        , sprintf( "%.2g", $$res{ 'Rs_sd' } )
-        , sprintf( "%.3g", $$res{ 'Eta' } )
-        , sprintf( "%.2f", $$res{ 'Eta_sd' } )
-        , sprintf( "%.3g", $$res{ 'Rg' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'Eta' } ), 3 )
+        , digitfix( sprintf( "%.2f", $$res{ 'Eta_sd' } ), 2 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rg' } ), 3 )
         , sprintf( "%.2f", $$res{ 'ExtX' } )
         , sprintf( "%.2f", $$res{ 'ExtY' } )
         , sprintf( "%.2f", $$res{ 'ExtZ' } )
@@ -345,13 +356,13 @@ sub dbm_csv_spec {
         , $$res{ '_id' }
         , sprintf( "%.1f", $$res{ 'mw' } )
         , $$res{ 'psv' }
-        , sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 )
-        , sprintf( "%.3g", $$res{ 'S' } )
-        , sprintf( "%.3g", $$res{ 'Rs' } )
-        , sprintf( "%.3g", $$res{ 'Eta' } )
-        , sprintf( "%.2f", $$res{ 'Eta_sd' } )
-        , sprintf( "%.3g", $$res{ 'Rg' } )
-        , sprintf( "%.3g", $$res{ 'Rg_Rs' } )
+        , digitfix( sprintf( "%.3g", $$res{ 'Dtr' } * 1e7 ), 3 )
+        , digitfix( sprintf( "%.3g", $$res{ 'S' } ), 3 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rs' } ), 3 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Eta' } ), 3 )
+        , digitfix( sprintf( "%.2f", $$res{ 'Eta_sd' } ), 2 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rg' } ), 3 )
+        , digitfix( sprintf( "%.3g", $$res{ 'Rg_Rs' } ), 3 )
         , sprintf( "%.2f", $$res{ 'ExtX' } )
         , sprintf( "%.2f", $$res{ 'ExtY' } )
         , sprintf( "%.2f", $$res{ 'ExtZ' } )
@@ -469,8 +480,8 @@ sub p_config_init {
         $debug = $$p_config{debug};
     }
 
-    if ( $$p_config{"ln"} ) {
-        $ln = "cp";
+    if ( exists $$p_config{"ln"} ) {
+        $ln = $$p_config{"ln"};
     } else {
         $ln = "ln";
     }
