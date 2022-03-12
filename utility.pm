@@ -60,12 +60,15 @@ sub dbm_count {
     return $mongo_af->count_documents({});
 }
 
-function digitfix( $strval, $digits ) {
-    $strnodp = str_replace( ".", "", $strval );
-    if ( strlen($strnodp) >= $digits ) {
+sub digitfix {
+    my $strval = shift;
+    my $digits = shift;
+    my $strnodp = $strval;
+    $strnodp =~ s/\.//, $strval;
+    if ( length($strnodp) >= $digits ) {
         return $strval;
     }
-    if ( strpos( $strval, "." ) ) {
+    if ( $strval =~ /\./ ) {
         return $strval . "0";
     }
     return $strval . ".0";
