@@ -255,7 +255,7 @@ while ( $fid = shift ) {
             unlink $logf;
         }
 
-        ## pdb -> cif -> mmcif
+        ## pdb -> pdb_tf 
         {
             log_append( "$fpdb creating pdb for jsmol visualization (tf encoded)\n" );
             my @ol;
